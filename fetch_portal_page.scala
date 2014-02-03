@@ -2,16 +2,21 @@ import scala.io._
 import scala.actors._
 import Actor._
 
-val portal_url = 'http://de.wikipedia.org/wiki/Portal:Geist_und_Gehirn'
+object  HomePageLoader {
+	
+	val portalUrl = "http://de.wikipedia.org/wiki/Portal:Geist_und_Gehirn"
 
-def fetchPortalPage() = {
-	val caller = self
+	def fetchPortalPage() = {
+		val caller = self
 
-	actor { caller ! (portal_url, Source.fromURL(portal_url))}
+		actor { caller ! (portalUrl, Source.fromURL(portalUrl))}
 
-	receive {
-		case (url, text) =>
-			println(url)
-			println(text)
+		receive {
+			case (portalUrl, text) =>
+				println(portalUrl)
+				println(text)
+		}
 	}
 }
+
+HomePageLoader.fetchPortalPage()
