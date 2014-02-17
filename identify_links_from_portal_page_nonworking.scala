@@ -1,10 +1,16 @@
 import scala.io._
 import scala.actors._
 import Actor._
+import scala.xml._
 
 object HomePageLoader {
 	
 	val portalUrl = "http://de.wikipedia.org/wiki/Portal:Geist_und_Gehirn"
+
+	def extractUrls(text: String): String = {
+		val xml = XML.loadString(text)
+		return (xml \\ "a" \ "@href").mkString
+	}
 
 	def fetchPortalPage() = {
 		val caller = self
@@ -13,8 +19,7 @@ object HomePageLoader {
 
 		receive {
 			case (portalUrl, text) =>
-				println(portalUrl)
-				print(text)
+				print(extractUrls((text.asInstanceOf[String])))
 		}
 	}
 }	
