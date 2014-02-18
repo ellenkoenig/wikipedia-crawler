@@ -16,8 +16,8 @@ object HomePageLoader {
 
 	def extractUrls(source: String): String = {
     	val xml = adapter.loadXML(new InputSource(new StringReader(source)), parser)
-	val href = (xml \\ "a" \\ "@href")
-	return href.text //todo/next step Convert this into an array of URLs rather than one long String
+		val href = (xml \\ "a" \\ "@href")
+		return href.text //todo/next step Convert this into an array of URLs rather than one long String
 	}
 
 	def fetchPortalPage() = {
